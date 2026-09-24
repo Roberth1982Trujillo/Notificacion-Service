@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # Especificamos que estamos usando Maven (revisará el archivo pom.xml)
+  - package-ecosystem: "maven"
+    
+    # Le indicamos que el pom.xml está en la carpeta principal (raíz) del repositorio
+    directory: "/"
+    
+    # Definimos la frecuencia con la que queremos que busque actualizaciones
+    schedule:
+      interval: "weekly" # Puede ser "daily", "weekly" o "monthly"
+      day: "monday"      # Opcional: Día específico para las revisiones semanales
+      time: "09:00"      # Opcional: Hora de la revisión
+      timezone: "America/Lima" # Opcional: Tu zona horaria
+    
+    # Opcional: Etiquetas que Dependabot pondrá automáticamente en los Pull Requests que cree
+    labels:
+      - "dependencias"
+      - "mantenimiento"
+    
+    # Opcional: Límite de Pull Requests abiertos al mismo tiempo por Dependabot
+    open-pull-requests-limit: 5
