@@ -13,7 +13,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+# --- CH-08: Automatización de Publicación de Imágenes (GHCR). ---
+permissions:
+  contents: read
+  packages: write
+# -----------------
 jobs:
   build:
 
@@ -45,3 +49,16 @@ jobs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+# --- CH-08: Automatización de Publicación de Imágenes (GHCR). ---
+    - name: Iniciar sesión en GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Etiquetar imagen para GHCR
+      run: docker tag notificacion-service:latest ghcr.io/roberth1982trujillo/notificacion-service:latest
+
+    - name: Subir imagen a GHCR
+      run: docker push ghcr.io/roberth1982trujillo/notificacion-service:latest
