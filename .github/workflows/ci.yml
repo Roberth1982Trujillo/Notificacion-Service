@@ -32,12 +32,12 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package -DskipTests --file pom.xml
+      run: mvn -B package --file pom.xml
     - name: Analisis con SonarCloud
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -DskipTests -Dsonar.organization=roberth1982trujillo -Dsonar.projectKey=roberth1982trujillo_Notificacion-Service
+      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.organization=roberth1982trujillo -Dsonar.projectKey=roberth1982trujillo_Notificacion-Service
     - name: Construir imagen Docker localmente
       run: docker build -t notificacion-service:latest .
     - name: Escaneo de vulnerabilidades con Trivy
